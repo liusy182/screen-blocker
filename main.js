@@ -1,13 +1,22 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
 function createWindow () {
-  // Create the browser window.
+  const {width, height} = require('electron').screen.getPrimaryDisplay().workAreaSize
+
   win = new BrowserWindow({
-    fullscreen: true
+    width,
+    height,
+    backgroundColor: '#000',
+    alwaysOnTop: true,
+    fullscreen: true,
+    minimizable: false,
+    resizable: false,
+    movable: false,
+    // closable: false,
   })
 
   // and load the index.html of the app.
@@ -29,5 +38,8 @@ app.on('activate', () => {
   if (win === null) {
     createWindow();
   }
-
 })
+
+// ipcMain.on('client-quit', () => {
+//   app.quit();
+// })
